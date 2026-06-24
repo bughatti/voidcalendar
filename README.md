@@ -1,6 +1,6 @@
 # VoidCalendar
 
-A Void-themed in-game calendar replacement for World of Warcraft (12.0.5+ / Midnight). Adds cross-region timezone awareness, cleaner event displays, and per-class signup counts at a glance.
+A Void-themed in-game calendar replacement for World of Warcraft (12.0.7+ / Midnight). Adds cross-region timezone awareness, cleaner event displays, and per-class signup counts at a glance.
 
 
 > Part of the **bughatti workshop** — see all my addons + mobile apps at **[tinkerline.io](https://tinkerline.io)**.
