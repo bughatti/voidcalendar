@@ -26,23 +26,23 @@ It also fixes the per-class signup count display — Blizzard's "Sign Up" button
 
 1. Download from CurseForge (or copy the `VoidCalendar` folder into `World of Warcraft/_retail_/Interface/AddOns/`)
 2. `/reload` or restart WoW
-3. Press `Y` (or type `/vc`) to open
+3. Press `Y` (or type `/vcal`) to open
 
-No setup required. Works out of the box on US realms. EU realms detected automatically. Override with `/vc tzoverride <hours>` if your specific realm misbehaves.
+No setup required. Works out of the box on US realms. EU realms detected automatically. Override with `/vcal tzoverride <hours>` if your specific realm misbehaves.
 
 ## Slash commands
 
 | Command | What it does |
 |---|---|
-| `/vc` | Toggle the calendar |
-| `/vc bliz` | Open Blizzard's native calendar instead (for comparison) |
-| `/vc intercept` | Toggle the Y-key intercept on/off |
-| `/vc swap` | Swap primary time display (local ↔ server) |
-| `/vc tz` | Print timezone diagnostics to chat |
-| `/vc tzoverride -7` | Manually override assumed server timezone (e.g., -7 for PDT) |
-| `/vc tzoverride clear` | Reset to Pacific default |
-| `/vc reset` | Reset frame position to center |
-| `/vc help` | Show all commands |
+| `/vcal` | Toggle the calendar |
+| `/vcal bliz` | Open Blizzard's native calendar instead (for comparison) |
+| `/vcal intercept` | Toggle the Y-key intercept on/off |
+| `/vcal swap` | Swap primary time display (local ↔ server) |
+| `/vcal tz` | Print timezone diagnostics to chat |
+| `/vcal tzoverride -7` | Manually override assumed server timezone (e.g., -7 for PDT) |
+| `/vcal tzoverride clear` | Reset to Pacific default |
+| `/vcal reset` | Reset frame position to center |
+| `/vcal help` | Show all commands |
 
 ## How the cross-region detection works
 

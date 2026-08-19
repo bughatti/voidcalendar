@@ -20,7 +20,7 @@ local function installFrameHook()
 
     CalendarFrame:HookScript("OnShow", function(self)
         if not VC:GetDB().enabled then return end
-        -- TESTING: if user has run `/vc bliz`, allow Blizzard's calendar to
+        -- TESTING: if user has run `/vcal bliz`, allow Blizzard's calendar to
         -- show alongside ours instead of intercepting. Used for side-by-side
         -- comparison + debugging.
         if VC._allowBlizz then return end

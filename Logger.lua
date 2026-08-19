@@ -3,9 +3,9 @@
 -- event and every C_Calendar.* API call (with caller stack) so we can
 -- see exactly what's driving the calendar's refresh activity.
 --
--- Slash:  /vc log         toggle popup
---         /vc log clear   wipe buffer
---         /vc log pause   pause/resume capture
+-- Slash:  /vcal log         toggle popup
+--         /vcal log clear   wipe buffer
+--         /vcal log pause   pause/resume capture
 --
 -- The popup shows: timestamp, kind (EVENT | CALL | RSP), name, details.
 -- Hooks are non-secure (hooksecurefunc) so they can't taint Blizzard.

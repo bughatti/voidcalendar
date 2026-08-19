@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.12] — 2026-08-19
+
+### Changed
+- Main slash command is now `/vcal` (was `/vc`). `/voidcal` and `/voidcalendar` unchanged.
+  Frees `/vc` to avoid colliding with other addons.
+
+## [0.1.11] — 2026-08-11
+
+### Changed
+- Compatibility with patch 12.1 "Curse of Ula'tek" (TOC interface bump to 12.1).
+
 ## [0.1.10] — 2026-06-20
 
 ### Compatibility

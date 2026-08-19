@@ -5,8 +5,8 @@
 -- that auto-displays both server time AND your local time on every event.
 --
 -- Slash:
---   /vc | /voidcal | /voidcalendar    toggle calendar
---   /vc reset      reset frame position
+--   /vcal | /voidcal | /voidcalendar    toggle calendar
+--   /vcal reset      reset frame position
 ----------------------------------------------------------------------
 -- VoidSpy hook: enable with /vspy enable VoidCalendar  (no-op if VoidSpy missing/disabled)
 local function dbg(fmt, ...) if VoidSpy and VoidSpy.Log then VoidSpy:Log("VoidCalendar", fmt, ...) end end
@@ -237,7 +237,7 @@ end)
 ----------------------------------------------------------------------
 -- Slash commands
 ----------------------------------------------------------------------
-SLASH_VOIDCAL1 = "/vc"
+SLASH_VOIDCAL1 = "/vcal"      -- was /vc; freed to resolve collision with VoidChat's /vc
 SLASH_VOIDCAL2 = "/voidcal"
 SLASH_VOIDCAL3 = "/voidcalendar"
 SlashCmdList.VOIDCAL = function(msg)
@@ -299,7 +299,7 @@ SlashCmdList.VOIDCAL = function(msg)
         -- Toggle intercept mode persistently — for extended testing
         VC._allowBlizz = not VC._allowBlizz
         if VC._allowBlizz then
-            print("|cff00c7ff[VoidCalendar]|r Intercept |cffff5555OFF|r — Y key opens Blizzard's calendar. /vc still opens ours.")
+            print("|cff00c7ff[VoidCalendar]|r Intercept |cffff5555OFF|r — Y key opens Blizzard's calendar. /vcal still opens ours.")
         else
             print("|cff00c7ff[VoidCalendar]|r Intercept |cff00ff00ON|r — Y key opens VoidCalendar.")
         end
@@ -344,7 +344,7 @@ SlashCmdList.VOIDCAL = function(msg)
         end
     elseif msg:match("^tzoverride") then
         -- Override the assumed server TZ in case Pacific is wrong
-        -- Usage: /vc tzoverride -7  (PDT), /vc tzoverride -5 (EDT), /vc tzoverride clear
+        -- Usage: /vcal tzoverride -7  (PDT), /vcal tzoverride -5 (EDT), /vcal tzoverride clear
         local arg = msg:match("^tzoverride%s+(.+)$")
         if arg == "clear" or arg == "off" or arg == "default" then
             VC.TimeUtil._serverOffsetOverride = nil
@@ -355,7 +355,7 @@ SlashCmdList.VOIDCAL = function(msg)
                 VC.TimeUtil._serverOffsetOverride = h * 3600
                 print(string.format("|cff00c7ff[VoidCalendar]|r Server TZ override = UTC%+d (%d sec)", h, h * 3600))
             else
-                print("|cff00c7ff[VoidCalendar]|r Usage: /vc tzoverride <hours> | clear")
+                print("|cff00c7ff[VoidCalendar]|r Usage: /vcal tzoverride <hours> | clear")
             end
         else
             local cur = VC.TimeUtil._serverOffsetOverride
@@ -367,15 +367,15 @@ SlashCmdList.VOIDCAL = function(msg)
         end
     elseif msg == "help" then
         print("|cff00c7ff[VoidCalendar]|r commands:")
-        print("  |cff00c7ff/vc|r              open/close VoidCalendar")
-        print("  |cff00c7ff/vc bliz|r         open Blizzard's calendar (one-shot)")
-        print("  |cff00c7ff/vc intercept|r    toggle intercept ON/OFF (persistent)")
-        print("  |cff00c7ff/vc swap|r         swap primary display (local↔server time)")
-        print("  |cff00c7ff/vc tz|r           print timezone diagnostics")
-        print("  |cff00c7ff/vc notify|r       toggle reminder notifications ON/OFF")
-        print("  |cff00c7ff/vc notify default <minutes>|r  set default reminder time")
-        print("  |cff00c7ff/vc notify sound|r toggle reminder sound")
-        print("  |cff00c7ff/vc reset|r        reset position")
+        print("  |cff00c7ff/vcal|r            open/close VoidCalendar")
+        print("  |cff00c7ff/vcal bliz|r         open Blizzard's calendar (one-shot)")
+        print("  |cff00c7ff/vcal intercept|r    toggle intercept ON/OFF (persistent)")
+        print("  |cff00c7ff/vcal swap|r         swap primary display (local↔server time)")
+        print("  |cff00c7ff/vcal tz|r           print timezone diagnostics")
+        print("  |cff00c7ff/vcal notify|r       toggle reminder notifications ON/OFF")
+        print("  |cff00c7ff/vcal notify default <minutes>|r  set default reminder time")
+        print("  |cff00c7ff/vcal notify sound|r toggle reminder sound")
+        print("  |cff00c7ff/vcal reset|r        reset position")
     else
         if VC.Calendar and VC.Calendar.Toggle then VC.Calendar:Toggle() end
     end

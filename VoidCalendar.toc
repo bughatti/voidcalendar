@@ -1,8 +1,8 @@
-## Interface: 120007
+## Interface: 120100
 ## Title: |cff00c7ffVoidCalendar|r
 ## Notes: Void-themed calendar with per-player local-time conversion. Replaces Blizzard's calendar. Discord: https://discord.gg/7ZHmx7zMDh
 ## Author: Vede
-## Version: 0.1.10
+## Version: 0.1.12
 ## SavedVariables: VoidCalendarDB, VoidCalendarLog
 ## SavedVariablesPerCharacter: VoidCalendarCharDB, VoidHubCharDB
 ## IconTexture: Interface\Icons\INV_Misc_Note_03
