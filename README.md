@@ -92,3 +92,5 @@ MIT.
 
 Author: Vede
 Theme: matches the rest of the Void* family of addons (VoidUI, VoidAH, VoidBags, VoidLFG, VoidPug, VoidCheatSheet)
+
+*Part of the Void addon family · free M+ & raid player lookups at [voidscout.io](https://voidscout.io)*
