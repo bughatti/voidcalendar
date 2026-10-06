@@ -9,7 +9,8 @@ VoidCalendar replaces Blizzard's calendar with one that shows server time *and* 
 ## Features
 
 ### Times you don't have to convert
-- **Server time and your local time** on every event, with daylight saving handled at both ends
+- **Your time or server time — your choice:** the **My time** switch shows every event in your computer's time zone (an East Coast player on a West Coast realm sees East Coast times), or turn it off to see server time as scheduled. Hover any event for both
+- **Knows your realm's real time zone**, daylight saving included — the header shows the difference, e.g. "Realm +2h"
 - **Cross-region aware** — events created on Oceanic, EU, or Brazilian realms are converted from *their* time zone, not yours
 - **Per-event override** — right-click any event and choose a time zone if detection gets one wrong
 - **Create events in your own time** — pick your time zone from a dropdown and VoidCalendar converts it to server time for you
@@ -40,7 +41,7 @@ VoidCalendar replaces Blizzard's calendar with one that shows server time *and* 
 | `/vcal notify` | Turn event reminders on or off |
 | `/vcal notify default <minutes>` | Set the default reminder time for new events |
 | `/vcal notify sound` | Turn the reminder sound on or off |
-| `/vcal swap` | Swap which time is shown first (local or server) |
+| `/vcal swap` | Switch between your time and server time (same as the **My time** switch) |
 | `/vcal withdrawn` | List events you withdrew from, with their rosters |
 | `/vcal bliz` | Open Blizzard's calendar instead, once |
 | `/vcal intercept` | Choose whether **Y** opens VoidCalendar or Blizzard's calendar |

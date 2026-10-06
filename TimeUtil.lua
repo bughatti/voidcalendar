@@ -44,17 +44,62 @@ end
 -- Optional manual override (e.g., for a specific event the user knows is mis-detected)
 TimeUtil._serverOffsetOverride = nil
 
+----------------------------------------------------------------------
+-- YOUR REALM'S real UTC offset, measured — not assumed.
+-- (Until 2026-10-06 every US realm was assumed to be Pacific, which put
+-- events on Eastern/Central/Mountain realms hours off.)
+--   realm wall clock : C_DateAndTime.GetCurrentCalendarTime()
+--   true UTC         : GetServerTime()
+-- time(realmWall) interprets the table in the PLAYER's tz, so
+--   realmOffset = playerOffset + (time(realmWall) - utc), rounded to 15 min.
+-- For a different date we shift by the region's DST change between now and then.
+----------------------------------------------------------------------
+local _realmCache, _realmCacheAt
+local function _measureRealmOffsetNow()
+    if _realmCache and _realmCacheAt and (GetTime() - _realmCacheAt) < 300 then return _realmCache end
+    local c = C_DateAndTime and C_DateAndTime.GetCurrentCalendarTime and C_DateAndTime.GetCurrentCalendarTime()
+    local utc = GetServerTime and GetServerTime()
+    if not (c and c.year and utc) then return nil end
+    local wall = time({ year = c.year, month = c.month, day = c.monthDay,
+                        hour = c.hour or 0, min = c.minute or 0, sec = 0 })
+    if not wall then return nil end
+    local off = _getPlayerOffsetSec() + (wall - utc)
+    off = math.floor(off / 900 + 0.5) * 900
+    _realmCache, _realmCacheAt = off, GetTime()
+    return off
+end
+
+-- Realm offset on a given date: measured now, adjusted if DST differs then.
+local function _realmOffsetOn(year, month, day)
+    local now = _measureRealmOffsetNow()
+    if not now then return nil end
+    if VC.RealmData and VC.RealmData.DstShift then
+        local t = date("*t")
+        return now + VC.RealmData:DstShift(year, month, day, t.year, t.month, t.day)
+    end
+    return now
+end
+TimeUtil.GetRealmOffsetOn = function(_, y, m, d) return _realmOffsetOn(y, m, d) end
+
 -- Resolve the event's source TZ offset. Priority:
 --   1. Per-event override stored in VoidCalendarDB.eventTzOverrides[eventKey]
 --   2. Manual global override (TimeUtil._serverOffsetOverride)
---   3. Creator's region (via RealmData)
---   4. Player's region default (RealmData.GetDefaultRegion)
+--   3. Creator on a realm in ANOTHER region (Oceanic/Brazil/EU) → that region's tz
+--   4. Your realm's measured tz (events are scheduled in server time)
 local function _resolveSourceOffset(year, month, day, creator, eventKey)
     if eventKey and VoidCalendarDB and VoidCalendarDB.eventTzOverrides then
         local h = VoidCalendarDB.eventTzOverrides[eventKey]
         if type(h) == "number" then return h * 3600 end
     end
     if TimeUtil._serverOffsetOverride then return TimeUtil._serverOffsetOverride end
+    if VC.RealmData then
+        local region = VC.RealmData:GetRegionForCreator(creator)
+        if region and region ~= VC.RealmData:GetDefaultRegion() then
+            return VC.RealmData:GetTzInfo(creator, year, month, day).offset
+        end
+    end
+    local measured = _realmOffsetOn(year, month, day)
+    if measured then return measured end
     if VC.RealmData then
         local info = VC.RealmData:GetTzInfo(creator, year, month, day)
         return info.offset
@@ -109,7 +154,21 @@ function TimeUtil:GetEventTzInfo(year, month, day, creator, eventKey)
         }
     end
     if VC.RealmData then
-        return VC.RealmData:GetTzInfo(creator, year, month, day)
+        local info = VC.RealmData:GetTzInfo(creator, year, month, day)
+        -- Same region as you → the event is in your realm's (measured) time.
+        if info.region == VC.RealmData:GetDefaultRegion() then
+            local off = _realmOffsetOn(year, month, day)
+            if off then
+                local h = off / 3600
+                return {
+                    region = "REALM", realm = GetRealmName(),
+                    offset = off,
+                    abbr   = (h == math.floor(h)) and ("UTC%+d"):format(h) or ("UTC%+.1f"):format(h),
+                    displayName = "Realm time",
+                }
+            end
+        end
+        return info
     end
     return { region = "US", realm = nil, offset = -7 * 3600, abbr = "PDT", displayName = "Pacific (fallback)" }
 end

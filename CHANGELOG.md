@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0] — 2026-10-06
+
+### New
+- **"My time" switch** in the header: ON shows every event in your computer's time zone, OFF shows server time exactly as scheduled. Hover any event to see both.
+
+### Fixed
+- **Event times on non-Pacific realms were wrong.** VoidCalendar assumed every US realm runs on Pacific time; it now reads your realm's actual time zone from the game clock (daylight saving included). The header shows the difference, e.g. "Realm +2h".
+- The calendar window can no longer open partly off screen.
+- The version number is correct again.
+- The Void addons info panel (`/vhub info`) now lists only the addons you can actually get, with up-to-date descriptions.
+
 ## [0.1.12] — 2026-08-19
 
 ### Changed

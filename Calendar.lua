@@ -341,6 +341,8 @@ local function BuildFrame()
     frame:SetSize(750, 560)
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(100)
+    -- A saved position from a larger screen/UI scale could leave it half off-screen.
+    frame:SetClampedToScreen(true)
     VC:CreateBackdrop(frame)
 
     -- Position (saved per-character)
@@ -467,8 +469,8 @@ local function BuildFrame()
         default  = not VC:GetDB().hideBlizzEvents,
         tooltip  = {
             "Show/Hide Blizzard Events",
-            "Toggles holidays, lockouts, raid resets,",
-            "seasonal events, and the Darkmoon Faire",
+            "Holidays (Darkmoon Faire, festivals), raid resets",
+            "and lockouts from Blizzard. OFF hides them.",
         },
         onChange = function(on)
             VC:GetDB().hideBlizzEvents = not on
@@ -479,6 +481,29 @@ local function BuildFrame()
     blizzToggle:SetSize(68, 22)
     blizzToggle:SetPoint("LEFT", notifyToggle, "RIGHT", 6, 0)
     frame.blizzToggle = blizzToggle
+
+    -- Which clock event times are shown in. Events are scheduled in server
+    -- (realm) time; ON converts every time on the calendar to this computer's
+    -- time zone, OFF shows them exactly as scheduled. Tooltips show both.
+    local myTimeToggle = VC:MakeSwitch(header, {
+        label    = "My time",
+        default  = VC:GetDB().primaryTimeIs == "local",
+        tooltip  = {
+            "Show times in my time zone",
+            "ON: event times are converted to this computer's time zone.",
+            "OFF: times are shown in server (realm) time, as scheduled.",
+            "Hover any event to see both.",
+            "\"Realm +2h\" (top right) = the realm clock is 2 hours ahead of yours.",
+        },
+        onChange = function(on)
+            VC:GetDB().primaryTimeIs = on and "local" or "server"
+            Calendar._lastSig = nil
+            Calendar:Refresh()
+        end,
+    })
+    myTimeToggle:SetSize(86, 22)
+    myTimeToggle:SetPoint("LEFT", blizzToggle, "RIGHT", 6, 0)
+    frame.myTimeToggle = myTimeToggle
 
     -- Close button (uses Blizzard's standard X texture, no font glyphs)
     local closeBtn = CreateFrame("Button", nil, header)
@@ -508,7 +533,7 @@ local function BuildFrame()
     -- the Blz button so they never overlap.
     local blizBtn = CreateFrame("Button", nil, header, "BackdropTemplate")
     blizBtn:SetSize(28, 22)
-    blizBtn:SetPoint("LEFT", blizzToggle, "RIGHT", 12, 0)
+    blizBtn:SetPoint("LEFT", myTimeToggle, "RIGHT", 8, 0)
     blizBtn:RegisterForClicks("AnyUp")
     VC:CreateBackdrop(blizBtn, "dark")
     blizBtn:SetBackdropColor(P.accentDim[1] * 0.4, P.accentDim[2] * 0.4, P.accentDim[3] * 0.4, 0.8)
@@ -704,11 +729,11 @@ function Calendar:Refresh()
     local offH = off / 3600
     local tzStr
     if math.abs(offH) < 0.1 then
-        tzStr = "Server = you"
+        tzStr = "Realm = you"
     elseif offH > 0 then
-        tzStr = string.format("Server %.0fh behind", offH)
+        tzStr = string.format("Realm -%.0fh", offH)
     else
-        tzStr = string.format("Server %.0fh ahead", -offH)
+        tzStr = string.format("Realm +%.0fh", -offH)
     end
     frame.tzLabel:SetText(tzStr)
 

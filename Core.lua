@@ -13,7 +13,8 @@ local function dbg(fmt, ...) if VoidSpy and VoidSpy.Log then VoidSpy:Log("VoidCa
 
 VoidCalendar = {}
 local VC = VoidCalendar
-VC.version = "0.1.0"
+-- Read from the TOC so it can't drift from the released version.
+VC.version = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("VoidCalendar", "Version")) or "?"
 
 ----------------------------------------------------------------------
 -- Void palette (matches the rest of the Void* addon family)

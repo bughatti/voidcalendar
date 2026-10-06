@@ -186,6 +186,17 @@ RealmData.REALM_REGION = REALM_REGION
 -- API
 ----------------------------------------------------------------------
 
+-- Seconds to add to a realm offset measured on (y2,m2,d2) to get the offset on
+-- (y1,m1,d1), using the player's region DST rules (+3600 if DST on then but not now).
+local DST_RULE = { US = isUsDst, EU = isEuDst, OC = isAuDst }
+function RealmData:DstShift(y1, m1, d1, y2, m2, d2)
+    local rule = DST_RULE[self:GetDefaultRegion()]
+    if not rule or not y1 then return 0 end
+    local thenDst, nowDst = rule(y1, m1, d1), rule(y2, m2, d2)
+    if thenDst == nowDst then return 0 end
+    return thenDst and 3600 or -3600
+end
+
 -- Default region from WoW's current region setting
 function RealmData:GetDefaultRegion()
     local r = GetCurrentRegion and GetCurrentRegion() or 1
