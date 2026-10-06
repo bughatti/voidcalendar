@@ -4,9 +4,23 @@
 **Public repo:** `bughatti/voidcalendar`
 **Status:** Published
 
-## File layout (9 files)
+## File layout
 
 Custom calendar UI replacing Blizzard's. Cross-region timezone awareness for guilds spanning NA/EU.
+(Moved here from the README on 2026-10-05 — README is player-facing only, see `../README-STYLE.md`.)
+
+- `Core.lua` — palette, slash commands, lifecycle
+- `RealmData.lua` — realm-to-region map + DST-aware TZ resolvers
+- `TimeUtil.lua` — creator-aware time conversion
+- `Events.lua` / `EventStore.lua` — calendar API scanner + categorization, sign-up predicate
+- `ContextMenu.lua` — cursor-positioned dropdown
+- `Calendar.lua` — main month grid (+ Notify switch)
+- `EventDetail.lua` — event popup + class roster
+- `EventCreate.lua` — create event popup with TZ dropdown
+- `Reminders.lua` — chat/toast reminders before accepted events
+- `Hooks.lua` — Blizzard calendar interception
+
+Saved variables: `VoidCalendarDB` (global config, per-event TZ overrides, reminders, `withdrawnEvents` snapshots), `VoidCalendarCharDB` (per-character frame position).
 
 ## Critical gotchas (12.0 Calendar API)
 
@@ -57,7 +71,7 @@ C_Calendar.ContextMenuEventRemove()
 
 ## Slash
 - `/vcal` — open calendar
-- `/vcal today` — jump to today
+- Full list: see README Slash Commands (verified against `Core.lua` 2026-10-05). There is no `/vcal today`.
 
 ## Related
 - [[voidcalendar-addon]] — broader addon-level notes

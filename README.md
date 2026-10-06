@@ -1,96 +1,92 @@
 # VoidCalendar
 
-A Void-themed in-game calendar replacement for World of Warcraft (12.0.7+ / Midnight). Adds cross-region timezone awareness, cleaner event displays, and per-class signup counts at a glance.
+**A Void-themed calendar replacement that shows every event in your own time zone.**
 
+VoidCalendar replaces Blizzard's calendar with one that shows server time *and* your local time on every event, handles cross-region raid leaders automatically, reminds you before events start, and shows per-class signup counts at a glance.
 
-> Part of the **bughatti workshop** — see all my addons + mobile apps at **[tinkerline.io](https://tinkerline.io)**.
-## What it does
+---
 
-- **Full calendar replacement** — opens in place of Blizzard's default calendar when you press `Y`
-- **Shows BOTH times on every event:** server time AND your local time, with proper DST handling for both ends
-- **Cross-region aware** — automatically detects when an event creator is on an Oceanic / EU / Brazilian realm and converts from their region's timezone, not yours
-- **Per-class signup counts** — 13 class icons row across the bottom of the event popup; greyed when no one of that class signed up, full color with count badge when at least one did
-- **Custom event creation** with a timezone dropdown — input your local time in your TZ, addon auto-converts to server time before storage
-- **Audience-aware events** — Personal, Guild, and Community event creation from the same right-click menu on a day cell
-- **Color-coded categories** — visually distinguishes Mythic Raid vs Heroic vs Normal vs M+ vs PvP vs Blizzard system events
-- **Auto-refresh** — picks up new invites and roster changes as they arrive from Blizzard's servers; no reload needed
-- **Per-event timezone override** — right-click any event row → choose a TZ if auto-detection is wrong for that specific event
+## Features
 
-## Why use it
+### Times you don't have to convert
+- **Server time and your local time** on every event, with daylight saving handled at both ends
+- **Cross-region aware** — events created on Oceanic, EU, or Brazilian realms are converted from *their* time zone, not yours
+- **Per-event override** — right-click any event and choose a time zone if detection gets one wrong
+- **Create events in your own time** — pick your time zone from a dropdown and VoidCalendar converts it to server time for you
 
-Blizzard's calendar shows server time only. If you're not on the West Coast (where your server is set to Pacific), or if a raid leader on a different continent created the event, you have to do mental TZ math every time. VoidCalendar does it for you, automatically, per event, with proper DST handling for both hemispheres.
+### Event reminders
+- **Chat and on-screen reminders** before events you've accepted — from 5 minutes to 1 day before
+- Set a **default reminder** for new events, or choose per event
+- Optional **reminder sound**; one **Notify** switch turns them all on or off
 
-It also fixes the per-class signup count display — Blizzard's "Sign Up" button shows total counts but doesn't help you quickly see "do we have any tanks signed up yet?". The class roster row shows all 13 classes at a glance.
+### Signups at a glance
+- **Per-class signup counts** — 13 class icons across the event popup, greyed out until someone of that class signs up
+- **Sign Up / Tentative / Can't Make It** buttons that work correctly on sign-up events
+- **Withdrawal safety** — asks before you withdraw, and keeps a snapshot of the event and roster you left
 
-## Installation
+### A cleaner calendar
+- **Color-coded categories** — Mythic, Heroic, and Normal raids, M+, PvP, and Blizzard events at a glance
+- **Personal, Guild, and Community events** from the same right-click menu on any day
+- **Auto-refresh** — new invites and roster changes show up without a reload
+- **One-click escape hatch** — the **Blz** button opens Blizzard's own calendar
 
-1. Download from CurseForge (or copy the `VoidCalendar` folder into `World of Warcraft/_retail_/Interface/AddOns/`)
-2. `/reload` or restart WoW
-3. Press `Y` (or type `/vcal`) to open
+---
 
-No setup required. Works out of the box on US realms. EU realms detected automatically. Override with `/vcal tzoverride <hours>` if your specific realm misbehaves.
-
-## Slash commands
+## Slash Commands
 
 | Command | What it does |
 |---|---|
-| `/vcal` | Toggle the calendar |
-| `/vcal bliz` | Open Blizzard's native calendar instead (for comparison) |
-| `/vcal intercept` | Toggle the Y-key intercept on/off |
-| `/vcal swap` | Swap primary time display (local ↔ server) |
-| `/vcal tz` | Print timezone diagnostics to chat |
-| `/vcal tzoverride -7` | Manually override assumed server timezone (e.g., -7 for PDT) |
-| `/vcal tzoverride clear` | Reset to Pacific default |
-| `/vcal reset` | Reset frame position to center |
-| `/vcal help` | Show all commands |
+| `/vcal` | Open or close the calendar (or press **Y**) |
+| `/vcal notify` | Turn event reminders on or off |
+| `/vcal notify default <minutes>` | Set the default reminder time for new events |
+| `/vcal notify sound` | Turn the reminder sound on or off |
+| `/vcal swap` | Swap which time is shown first (local or server) |
+| `/vcal withdrawn` | List events you withdrew from, with their rosters |
+| `/vcal bliz` | Open Blizzard's calendar instead, once |
+| `/vcal intercept` | Choose whether **Y** opens VoidCalendar or Blizzard's calendar |
+| `/vcal tz` | Print time zone diagnostics |
+| `/vcal tzoverride <hours>` | Override the assumed server time zone (e.g. `-7`); `clear` to reset |
+| `/vcal reset` | Reset the window position |
+| `/vcal help` | Show all commands in game |
 
-## How the cross-region detection works
+---
+
+## Getting Started
+
+1. Install with the CurseForge app, or copy the `VoidCalendar` folder into `World of Warcraft/_retail_/Interface/AddOns/`.
+2. Restart WoW or `/reload`.
+3. Press **Y** — VoidCalendar opens instead of the default calendar.
+
+No setup needed on US realms; EU realms are detected automatically.
+
+---
+
+## How Cross-Region Detection Works
 
 When an event is created by `Lord-Frostmourne`, VoidCalendar:
-1. Extracts the realm name (`Frostmourne`)
-2. Looks it up in the built-in realm-to-region map — Frostmourne is Oceanic
-3. Uses Sydney time (AEST/AEDT depending on Southern Hemisphere DST) as the event's source TZ
-4. Converts to your local time for display
+1. Reads the realm name (`Frostmourne`)
+2. Looks it up in its built-in realm map — Frostmourne is Oceanic
+3. Uses Sydney time (with Southern Hemisphere daylight saving) as the event's time zone
+4. Converts it to your local time for display
 
-Currently covers:
-- All 12 Oceanic realms
-- All 5 Brazilian realms
-- 50+ unambiguous EU realms (those that don't share names with US realms)
-- US realms via fallback (Pacific assumed)
+The map covers all 12 Oceanic realms, all 5 Brazilian realms, and 50+ EU realms whose names don't clash with US realms. Anything else defaults to your own region.
 
-If a realm isn't in the map, VoidCalendar defaults to your region. Use the right-click → "Set TZ" override on any specific event if needed.
+---
 
-## Known limitations
+## Good to Know
 
-- **Some EU realms share names with US realms** (e.g., Stormrage, Sargeras). For those ambiguous cases, the addon assumes your own region. Override per-event if wrong.
-- **Calendar API status enum is undocumented for 12.0+** — VoidCalendar treats statuses 2/3/6/7 as "accepted/signed up". If Blizzard adds new values, the class roster counts may not include them until the addon updates.
-- **Class info for cross-realm invites can lag** — Blizzard sometimes returns nil class for the first few seconds after opening an event. VoidCalendar will auto-refresh when the data arrives.
-- **No mobile/web calendar sync** — this is an in-game replacement only.
+- **Some EU and US realms share a name** (e.g. Stormrage, Sargeras). For those, VoidCalendar assumes your own region — use the per-event override if it's wrong.
+- **Class icons can lag a few seconds** on cross-realm invites while Blizzard sends the data; the popup refreshes on its own.
+- **In-game only** — there's no phone or web calendar sync.
 
-## For developers / contributors
+---
 
-Files (load order):
-- `Core.lua` — palette, slash commands, lifecycle
-- `RealmData.lua` — realm-to-region map + DST-aware TZ resolvers
-- `TimeUtil.lua` — creator-aware time conversion
-- `Events.lua` — calendar API scanner + categorization
-- `ContextMenu.lua` — cursor-positioned dropdown
-- `Calendar.lua` — main month grid
-- `EventDetail.lua` — event popup + class roster
-- `EventCreate.lua` — create event popup with TZ dropdown
-- `Hooks.lua` — Blizzard calendar interception
+## Compatibility
 
-Saved variables:
-- `VoidCalendarDB` — global config + per-event TZ overrides
-- `VoidCalendarCharDB` — per-character frame position
+- **WoW 12.1** (Midnight Season 2)
+- Standalone — nothing else to install
+- Matches the look of the other Void addons
 
-## License
+---
 
-MIT.
-
-## Credits
-
-Author: Vede
-Theme: matches the rest of the Void* family of addons (VoidUI, VoidAH, VoidBags, VoidLFG, VoidPug, VoidCheatSheet)
-
-*Part of the Void addon family · free M+ & raid player lookups at [voidscout.io](https://voidscout.io)*
+*Part of the Void addon family by Vede · MIT licensed · free M+ & raid player lookups at [voidscout.io](https://voidscout.io) · more addons & apps at [tinkerline.io](https://tinkerline.io) · [Discord](https://discord.gg/7ZHmx7zMDh)*
