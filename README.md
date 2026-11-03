@@ -76,6 +76,7 @@ The map covers all 12 Oceanic realms, all 5 Brazilian realms, and 50+ EU realms 
 
 ## Good to Know
 
+- **Settings are per character.** Each character keeps its own VoidCalendar settings, and a new character starts with the settings of the one you played last, so nothing resets when you update. Right-click the Void hub icon by your minimap and pick **Copy settings from...** to take another character's settings for one Void addon or all of them. Reminders and Tentative marks are per character too, since invites differ by character.
 - **Some EU and US realms share a name** (e.g. Stormrage, Sargeras). For those, VoidCalendar assumes your own region — use the per-event override if it's wrong.
 - **Class icons can lag a few seconds** on cross-realm invites while Blizzard sends the data; the popup refreshes on its own.
 - **In-game only** — there's no phone or web calendar sync.

@@ -11,6 +11,14 @@
 -- VoidSpy hook: enable with /vspy enable VoidCalendar  (no-op if VoidSpy missing/disabled)
 local function dbg(fmt, ...) if VoidSpy and VoidSpy.Log then VoidSpy:Log("VoidCalendar", fmt, ...) end end
 
+-- Settings are per character (CharSettings.lua): display, notifications, your
+-- reminders and Tentative marks (invites differ by character). Time-zone fixes,
+-- withdrawn events and the log stay account-wide.
+select(2, ...).CharSettings.Register("VoidCalendar", "VoidCalendarDB", { "enabled", "showServerTime",
+    "showLocalTime", "primaryTimeIs", "hideBlizzEvents", "notificationsEnabled", "notificationSound",
+    "notificationToast", "notificationChat", "defaultReminderMinutes", "eventReminders", "firedReminders",
+    "localTentative" })
+
 VoidCalendar = {}
 local VC = VoidCalendar
 -- Read from the TOC so it can't drift from the released version.
