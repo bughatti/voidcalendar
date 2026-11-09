@@ -1,5 +1,7 @@
 # VoidCalendar
 
+**Works on:** WoW Midnight · WoW Forever
+
 **A Void-themed calendar replacement that shows every event in your own time zone.**
 
 VoidCalendar replaces Blizzard's calendar with one that shows server time *and* your local time on every event, handles cross-region raid leaders automatically, reminds you before events start, and shows per-class signup counts at a glance.
@@ -54,7 +56,7 @@ VoidCalendar replaces Blizzard's calendar with one that shows server time *and* 
 
 ## Getting Started
 
-1. Install with the CurseForge app, or copy the `VoidCalendar` folder into `World of Warcraft/_retail_/Interface/AddOns/`.
+1. Install with the CurseForge app, or copy the `VoidCalendar` folder into `World of Warcraft/_retail_/Interface/AddOns/` (WoW Forever: `_forever_/Interface/AddOns/`).
 2. Restart WoW or `/reload`.
 3. Press **Y** — VoidCalendar opens instead of the default calendar.
 
@@ -85,7 +87,8 @@ The map covers all 12 Oceanic realms, all 5 Brazilian realms, and 50+ EU realms 
 
 ## Compatibility
 
-- **WoW 12.1.5** (Midnight Season 2)
+- **WoW Midnight** 12.1.5 (Season 2)
+- **WoW Forever**
 - Standalone — nothing else to install
 - Matches the look of the other Void addons
 
