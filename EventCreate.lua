@@ -173,6 +173,24 @@ EventCreate.EVENT_TYPES = {
     { label = "Guild Event",     value = "guild",      titlePrefix = "" },
     { label = "Other",           value = "other",      titlePrefix = "" },
 }
+-- Default selection (index into EVENT_TYPES): Heroic Raid on retail.
+EventCreate.DEFAULT_TYPE_INDEX = 2
+
+-- WoW Forever (Classic Era content, TOC 16001): no raid difficulties and no
+-- Mythic+, so offer plain types only and default to "Raid" with no title
+-- prefix (was "Heroic " on every new event). "Raid" reuses the raidNormal
+-- category so colours and Enum.CalendarEventType.Raid still apply.
+-- (Forever audit, 2026-11-10)
+if (select(4, GetBuildInfo()) or 0) < 100000 then
+    EventCreate.EVENT_TYPES = {
+        { label = "Raid",        value = "raidNormal", titlePrefix = "" },
+        { label = "Dungeon",     value = "dungeon",    titlePrefix = "" },
+        { label = "PvP",         value = "pvp",        titlePrefix = "PvP " },
+        { label = "Guild Event", value = "guild",      titlePrefix = "" },
+        { label = "Other",       value = "other",      titlePrefix = "" },
+    }
+    EventCreate.DEFAULT_TYPE_INDEX = 1
+end
 
 ----------------------------------------------------------------------
 -- Helpers
@@ -435,7 +453,7 @@ local function BuildFrame()
 
     -- Event type dropdown
     fields.typeLbl = CreateLabel(frame, "Type", fields.audience, -8)
-    fields.type = CreateDropdown(frame, fields.typeLbl, -4, 200, EventCreate.EVENT_TYPES, nil, 2)  -- default Heroic
+    fields.type = CreateDropdown(frame, fields.typeLbl, -4, 200, EventCreate.EVENT_TYPES, nil, EventCreate.DEFAULT_TYPE_INDEX)  -- default Heroic (retail) / Raid (Forever)
 
     -- Date input
     fields.dateLbl = CreateLabel(frame, "Date (YYYY-MM-DD)", fields.type, -8)

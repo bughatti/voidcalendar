@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.8] — 2026-11-10
+
+### Fixed (WoW Forever)
+- Event types on Forever are Raid, Dungeon, PvP, Guild Event and Other (no Heroic / Mythic / Mythic+).
+
 ## [0.2.7] — 2026-11-09
 
 - **Fixed: box borders missing a side.** Depending on where a window sat on screen, its left, right or bottom line could vanish. Borders are now exactly one screen pixel and can't round away.
