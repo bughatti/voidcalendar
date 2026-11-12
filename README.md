@@ -1,4 +1,4 @@
-# VoidCalendar
+# VoidCalendar - Calendar & Event Reminders
 
 **Works on:** WoW Midnight · WoW Forever
 
@@ -94,4 +94,4 @@ The map covers all 12 Oceanic realms, all 5 Brazilian realms, and 50+ EU realms 
 
 ---
 
-*Part of the Void addon family by Vede · MIT licensed · [Source & bug reports](https://github.com/bughatti/voidcalendar) · [All Void addons](https://www.curseforge.com/members/bughatti/projects) · free M+ & raid player lookups at [voidscout.io](https://voidscout.io) · more at [tinkerline.io](https://tinkerline.io) · [Discord](https://discord.gg/7ZHmx7zMDh)*
+*Part of the Void addon family by Vede · MIT licensed · [Source & bug reports](https://github.com/bughatti/voidcalendar) · [All Void addons](https://www.curseforge.com/members/bughatti/projects) · free M+ & raid player lookups at [voidscout.io](https://voidscout.io) · more at [tinkerline.io](https://tinkerline.io/addons/voidcalendar/) · [Discord](https://discord.gg/7ZHmx7zMDh)*

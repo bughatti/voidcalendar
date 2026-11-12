@@ -15,6 +15,7 @@
 -- of a box vanishes. VoidPX() asks for one real pixel, and the hook below (installed once, by
 -- the first Void addon loaded) turns snapping off on the edges of flat WHITE8X8 borders, like
 -- Blizzard's NineSliceUtil.DisableSharpening, so a 1 px line always covers a pixel.
+local _, ns = ...   -- ns.Move (VoidMove.lua)
 local function VoidPX()
     local s = UIParent and UIParent:GetEffectiveScale()
     if s and s > 0 and PixelUtil and PixelUtil.GetPixelToUIUnitFactor then return PixelUtil.GetPixelToUIUnitFactor() / s end
@@ -242,6 +243,7 @@ local function BuildFrame()
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", frame.StartMoving)
     frame:SetScript("OnDragStop",  frame.StopMovingOrSizing)
+    ns.Move(frame, { db = function() return VoidCalendarDB end, key = "logger" })   -- drag + kept after a restart (VoidMove.lua)
     frame:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
         edgeFile = "Interface\\Buttons\\WHITE8x8",

@@ -12,6 +12,7 @@
 -- can see the creator's intended timezone for context. Non-addon users
 -- just see the tag as text — harmless.
 ----------------------------------------------------------------------
+local _, ns = ...   -- ns.Move (VoidMove.lua)
 local function dbg(fmt, ...) if VoidSpy and VoidSpy.Log then VoidSpy:Log("VoidCalendar", fmt, ...) end end
 
 local VC = VoidCalendar
@@ -397,6 +398,7 @@ local function BuildFrame()
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", function(self) self:StartMoving() end)
     frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+    ns.Move(frame, { db = function() return VoidCalendarDB end, key = "eventCreate" })   -- drag + kept after a restart (VoidMove.lua)
 
     -- When popup closes, also close any open dropdown menus
     frame:SetScript("OnHide", function()

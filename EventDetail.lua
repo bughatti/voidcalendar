@@ -12,6 +12,7 @@
 -- Reads from C_Calendar after OpenEvent(). Listens for CALENDAR_*
 -- events to auto-refresh when data arrives or invites change.
 ----------------------------------------------------------------------
+local _, ns = ...   -- ns.Move (VoidMove.lua)
 local function dbg(fmt, ...) if VoidSpy and VoidSpy.Log then VoidSpy:Log("VoidCalendar", fmt, ...) end end
 
 ----------------------------------------------------------------------
@@ -341,6 +342,7 @@ local function BuildFrame()
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", function(self) self:StartMoving() end)
     frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+    ns.Move(frame, { db = function() return VoidCalendarDB end, key = "eventDetail" })   -- drag + kept after a restart (VoidMove.lua)
 
     -- Header (accent strip)
     local header = CreateFrame("Frame", nil, frame, "BackdropTemplate")

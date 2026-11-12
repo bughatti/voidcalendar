@@ -16,6 +16,7 @@
 -- of a box vanishes. VoidPX() asks for one real pixel, and the hook below (installed once, by
 -- the first Void addon loaded) turns snapping off on the edges of flat WHITE8X8 borders, like
 -- Blizzard's NineSliceUtil.DisableSharpening, so a 1 px line always covers a pixel.
+local _, ns = ...   -- ns.Move (VoidMove.lua)
 local function VoidPX()
     local s = UIParent and UIParent:GetEffectiveScale()
     if s and s > 0 and PixelUtil and PixelUtil.GetPixelToUIUnitFactor then return PixelUtil.GetPixelToUIUnitFactor() / s end
@@ -133,8 +134,8 @@ local function BuildToastContainer()
     toastFrame:SetSize(360, 200)
     toastFrame:SetPoint("TOP", UIParent, "TOP", 0, -80)
     toastFrame:SetFrameStrata("HIGH")
-    toastFrame:SetMovable(true)
-    toastFrame:EnableMouse(false)
+    toastFrame:EnableMouse(false)   -- the holder lets the mouse through; drag a toast to move them all
+    ns.Move(toastFrame, { db = function() return VoidCalendarDB end, key = "toasts", handle = false })
     return toastFrame
 end
 
@@ -154,6 +155,7 @@ local function MakeToast(title, subtitle)
     BuildToastContainer()
     local t = CreateFrame("Button", nil, toastFrame, "BackdropTemplate")
     t:SetSize(340, 50)
+    ns.MoveHandle(toastFrame, t)   -- drag a toast: the stack moves, and stays there (the user, 11-12)
     if t.SetBackdrop and not t.SetBackdrop then Mixin(t, BackdropTemplateMixin) end
     t:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
