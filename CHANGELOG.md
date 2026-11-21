@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.11] — 2026-11-21
+
+- **Fixed on WoW Forever: per-character settings.** The game stopped telling addons your realm's name, so your character's own settings were no longer loaded or saved. They are again, from where they were saved before.
+
 ## [0.2.10] — 2026-11-12
 
 - **Fixed: a side of a box could be missing**, e.g. the right line of the recipes box and its buttons when the game window is an odd number of pixels wide. Every Void box now always shows all four border lines.
