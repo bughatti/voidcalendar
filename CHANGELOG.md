@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.12] — 2026-11-25
+
+- **VoidHub window (WoW Forever):** right-click the VoidHub minimap button (or type /vhub) for every Void addon in one window: quests, layers, gear, gold, professions, combat, dungeons and more, each drawn from its own addon, with a Start page for what to do right now. Addons you don't have show a screenshot and how to get them. Shift + right-click opens Copy settings from another character. It comes inside every Void addon: nothing extra to install.
+
 ## [0.2.11] — 2026-11-21
 
 - **Fixed on WoW Forever: per-character settings.** The game stopped telling addons your realm's name, so your character's own settings were no longer loaded or saved. They are again, from where they were saved before.

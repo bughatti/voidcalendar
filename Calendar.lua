@@ -954,3 +954,18 @@ function Calendar:Init()
     Calendar._eventFrame = eventFrame
     dbg("Calendar listener installed (loop-safe)")
 end
+
+----------------------------------------------------------------------
+-- Read-only hooks for the all-in-one VoidHub window (2026-11-24): the hub's month grid reuses this grid's own event-row
+-- handlers (left-click = the event, right-click = open / copy / edit / delete / time zone; hover = both times). They only
+-- read the row's _eventData / _monthOffset / _day, so they work on the hub's rows too. Nothing here changes this grid.
+----------------------------------------------------------------------
+Calendar.Hub = {
+    RowScripts = function()
+        BuildFrame()
+        local r = dayCells[1] and dayCells[1].events[1]
+        if not r then return nil end
+        return r:GetScript("OnClick"), r:GetScript("OnEnter")
+    end,
+    MONTH_NAMES = MONTH_NAMES, DAYS_OF_WEEK = DAYS_OF_WEEK,
+}
